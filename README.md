@@ -30,11 +30,9 @@
 - Load-tested for **10,000 concurrent users**
 - Page load time: **<2 seconds**
 - Backend tested with **20+ REST APIs**
-
 ---
 
 ## 🧱 Tech Stack
-
 - **Frontend:** React.js, Tailwind CSS, Axios
 - **Backend:** Spring Boot, Spring Security, Spring Data JPA
 - **Database:** MySQL (AWS RDS)
