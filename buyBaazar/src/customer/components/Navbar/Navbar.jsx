@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { AddShoppingCart, FavoriteBorder, Storefront } from "@mui/icons-material";
 import CategorySheet from "./CategorySheet";
 import { mainCategory } from "../../../data/category/mainCategory";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const theme = useTheme();
@@ -25,6 +26,8 @@ const Navbar = () => {
     if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
   };
 
+  const navigate=useNavigate();
+
   return (
     <>
       <Box className="sticky top-0 left-0 right-0 bg-white" sx={{ zIndex: 2 }}>
@@ -36,7 +39,7 @@ const Navbar = () => {
                   <MenuIcon />
                 </IconButton>
               )}
-              <h1 className="logo cursor-pointer text-lg md:text-2xl text-primary-color">
+              <h1 onClick={()=>navigate("/")} className="logo cursor-pointer text-lg md:text-2xl text-primary-color">
                 Buy Baazar
               </h1>
             </div>
@@ -65,8 +68,8 @@ const Navbar = () => {
               <SearchIcon />
             </IconButton>
             {/* Replace `false` with logged-in state check if you add auth */}
-            {false ? (
-              <Button className="flex items-center gap-2">
+            {true ? (
+              <Button onClick={()=>navigate("/account/orders")} className="flex items-center gap-2">
                 <Avatar
                   sx={{ width: 29, height: 29 }}
                   src="https://s.yimg.com/ny/api/res/1.2/cCr6WKLpu2Oos7jPY9pgOQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTI0MDA7aD0xMjYw/https://media.zenfs.com/en/futurism_981/226fd923d54fbbf6a008b3e292dab2de"
@@ -79,7 +82,7 @@ const Navbar = () => {
             <IconButton>
               <FavoriteBorder sx={{ fontSize: 29 }} />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={()=>navigate("/cart")}>
               <AddShoppingCart className="text-gray-700" sx={{ fontSize: 29 }} />
             </IconButton>
             {isLarge && (

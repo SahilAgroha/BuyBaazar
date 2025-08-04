@@ -9,6 +9,7 @@ import { womenLevelThree } from '../../../data/category/level three/womenLevelTh
 import { electronicsLevelThree } from '../../../data/category/level three/electronicsLevelThree'
 import { furnitureLevelThree } from '../../../data/category/level three/furnitureLevelThree'
 import { Box } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 const categoryTwo={
     men:menLevelTwo,
@@ -29,6 +30,7 @@ const CategorySheet = ({selectedCategory,setShowSheet}) => {
     const childCategory = (category,parentCategoryId) => {
         return category.filter((child) => child.parentCategoryId === parentCategoryId)
     }
+    const navigate=useNavigate();
 
   return (
     <Box sx={
@@ -42,7 +44,7 @@ const CategorySheet = ({selectedCategory,setShowSheet}) => {
                     <ul className='space-y-3'>
                         {childCategory(categoryThree[selectedCategory],item.categoryId).map((item) =>
                         <div>
-                            <li className='hover:text-[#00927C] cursor-pointer'>
+                            <li onClick={()=>navigate("/products/"+item.categoryId)} className='hover:text-[#00927C] cursor-pointer'>
                                 {item.name}
                             </li>
                         </div>)
