@@ -40,16 +40,17 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function Transaction() {
+export default function OrderTable() {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Date</StyledTableCell>
-            <StyledTableCell align="right">Customer Details</StyledTableCell>
-            <StyledTableCell align="right">Order</StyledTableCell>
-            <StyledTableCell align="right">Amount</StyledTableCell>
+            <StyledTableCell>Order ID</StyledTableCell>
+            <StyledTableCell>Products</StyledTableCell>
+            <StyledTableCell align="right">Shipping Address</StyledTableCell>
+            <StyledTableCell align="right">Order Status</StyledTableCell>
+            <StyledTableCell align="right">updates</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -58,6 +59,7 @@ export default function Transaction() {
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
+              <StyledTableCell >{row.calories}</StyledTableCell>
               <StyledTableCell align="right">{row.fat}</StyledTableCell>
               <StyledTableCell align="right">{row.carbs}</StyledTableCell>
               <StyledTableCell align="right">{row.protein}</StyledTableCell>

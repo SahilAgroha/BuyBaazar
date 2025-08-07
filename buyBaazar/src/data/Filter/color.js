@@ -1,4 +1,4 @@
-export const color = [
+export const colors = [
   { "name": "Navy Blue", "hex": "#000080" },
   { "name": "Crimson", "hex": "#DC143C" },
   { "name": "Coral", "hex": "#FF7F50" },

@@ -1,6 +1,6 @@
 import { Button, Divider, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 import React, { useState } from 'react'
-import {color} from '../../../data/Filter/color'
+import {colors} from '../../../data/Filter/color'
 import { price } from '../../../data/Filter/price'
 import { discount } from '../../../data/Filter/discounts'
 import { useSearchParams } from 'react-router-dom'
@@ -49,7 +49,7 @@ const FilterSection = () => {
             Color</FormLabel>
           <RadioGroup aria-labelledby='color' defaultValue='' name='color' onChange={updateFilterParams}>
             {
-              color.slice(0,expendColor?color.length:5).map((item) => <FormControlLabel key={item.name} value={item.name} control={<Radio/>} 
+              colors.slice(0,expendColor?colors.length:5).map((item) => <FormControlLabel key={item.name} value={item.name} control={<Radio/>} 
               label={<div className='flex items-center gap-3'>
                 <p>{item.name}</p>
                 <p style={{backgroundColor:item.hex}}
@@ -62,7 +62,7 @@ const FilterSection = () => {
         </FormControl>
         <div>
           <Button className='text-[#00927c] cursor-pointer hover:text-teal-900 flex items-center' onClick={handleColorToggle}>
-            {expendColor?"hide":`+${color.length-5} more`}</Button>
+            {expendColor?"hide":`+${colors.length-5} more`}</Button>
         </div>
       </section>
 
