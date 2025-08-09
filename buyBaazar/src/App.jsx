@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -18,10 +18,15 @@ import ProductDetails from './customer/pages/Page Details/ProductDetails'
 import BecomeSeller from './customer/pages/Become Seller/BecomeSeller'
 import SellerDashboard from './seller/pages/SellerDashboard/SellerDashboard'
 import AdminDashboard from './admin/Pages/Dashboard/AdminDashboard'
+import { fetchProduct } from './State/fetchProduct'
+
 
 
 
 function App() {
+  useEffect(()=>{
+    fetchProduct()
+  },[])
   return (
     <>
       <ThemeProvider theme={customeTheme}>

@@ -4,8 +4,8 @@
   font-style: normal;
   color: teal;
 }
-@tailwind base;
-@tailwind components;
+@tailwindcss/preflight;
+@tailwind utilities;
 @tailwind utilities;
 
 .mainCategory:hover{
