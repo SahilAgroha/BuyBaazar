@@ -1,6 +1,6 @@
 import React from 'react'
 import { AccountBox, Add, Category, Dashboard, ElectricBolt, Home, IntegrationInstructions, LocalOffer, Logout } from '@mui/icons-material';
-import DrawerList from '../../customer/components/Navbar/DrawerList';
+import DrawerList from './../../component/DrawerList'
 
 const menu = [
   {

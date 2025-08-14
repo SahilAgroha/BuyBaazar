@@ -1,24 +1,33 @@
 import { Add, Close, Remove } from '@mui/icons-material'
 import { Button, Divider, IconButton } from '@mui/material'
 import React from 'react'
+import { useAppDispatch } from '../../../State/Store'
+import { updateCartItem } from '../../../State/customer/cartSlice'
+// import {CartItem} from '../../../types/cartType'
 
-const CartItem = () => {
-    const handleUpdateQuantity = () => {
-        // Logic to update quantity
+const CartItemCard = ({item})=>() => {
+    const dispatch=useAppDispatch()
+    console.log("Item +-+- =",item);
+    
+
+    const handleUpdateQuantity = (values)=() => {
+        dispatch(updateCartItem({jwt:localStorage.getItem('jwt'),
+            cartItemId:item.id,
+            cartItem:{quantity:item.quantity+values}
+        }))
     }
   return (
     <div className='border rounded-md relative'>
       <div className='p-5 flex gap-3'>
         <div>
-            <img className='w-[90px] rounded-md' 
-            src='https://sareesbazaar.in/cdn/shop/files/SB38_VOL9KP_K790-A_0150cf62-1a13-48c2-bfa8-10d108b22e01.jpg?v=1741330246&width=770'/>
+            <img className='w-[90px] rounded-md' src={item.product.images[0]} alt=''/>
         </div>
         <div className='space-y-2'>
-            <h1 className='font-semibold text-lg'>Sheoran Cloths</h1>
-            <p className='text-gray-600 font-medium text-sm'>Rayon Fabric Teal Color Traditional Wear Boys Readymade Kurta Pyjama</p>
+            <h1 className='font-semibold text-lg'>{item.product.seller?.businessDetails.businessName}</h1>
+            <p className='text-gray-600 font-medium text-sm'>{item.product.title}</p>
             <p className='text-gray-400 text-xs'><strong>Sold by: </strong>  Natural Lifestyle Products Private Limited</p>
             <p className='text-sm'> 7 Days replacement available</p>
-            <p className='text-gray-500 text-sm'><strong>quantity : </strong> 5</p>
+            <p className='text-gray-500 text-sm'><strong>quantity : </strong>{item.quantity}</p>
         </div>
         <Divider/>
        </div>
@@ -30,7 +39,7 @@ const CartItem = () => {
                 <Button onClick={handleUpdateQuantity} disabled={true}>
                     <Remove/>
                 </Button>
-                <span>{5}</span>
+                <span>{item.quantity}</span>
                 <Button onClick={handleUpdateQuantity}>
                     <Add/>
                 </Button>
@@ -38,7 +47,7 @@ const CartItem = () => {
         </div>
 
         <div className='pr-5'>
-            <p className='text-gray-700 font-medium'>₹799</p>
+            <p className='text-gray-700 font-medium'>₹{item.sellingPrice}</p>
         </div>
         </div>
 
@@ -52,4 +61,4 @@ const CartItem = () => {
   )
 }
 
-export default CartItem
+export default CartItemCard

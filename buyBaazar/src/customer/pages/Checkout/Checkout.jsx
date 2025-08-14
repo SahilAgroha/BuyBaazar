@@ -94,7 +94,7 @@ const Checkout = () => {
     </div>
     <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describdby="modal-modal-description">
         <Box sx={style}>
-            <AddressForm/>
+            <AddressForm paymentGatway={paymentGateway}/>
         </Box>
     </Modal>
     </>

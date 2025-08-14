@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
-import CartItem from './CartItem'
+import React, { useEffect, useState } from 'react'
 import { Close, LocalOffer } from '@mui/icons-material'
 import { teal } from '@mui/material/colors'
 import { Button, IconButton, TextField } from '@mui/material'
 import PricingCard from './PricingCard'
 import { useNavigate } from 'react-router-dom'
+import {useAppDispatch, useAppSelector} from '../../../State/Store'
+import {fetchUserCart} from "../../../State/customer/cartSlice"
+import CartItemCard from './CartItemCard'
 
 const Cart = () => {
     const [couponCode, setCouponCode] = useState('')
@@ -12,11 +14,22 @@ const Cart = () => {
         setCouponCode(e.target.value);
     }
     const navigate=useNavigate();
+    const dispatch=useAppDispatch();
+    const {cart}=useAppSelector(store=>store);
+
+    useEffect(()=>{
+        dispatch(fetchUserCart(localStorage.getItem("jwt") || ""));
+    },[])
+
+    
+
+
   return (
     <div className='pt-10 px-5 sm:px-10 md:px-60 min-h-screen'>
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
             <div className='cartItemSection lg:col-span-2 space-y-3'>
-                {[1,1,1,1,1].map((item,index)=><CartItem/>)}
+                {console.log("cart 1- === - - ",cart)}
+                {cart.cart?.cartItems.map((item,index)=><CartItemCard key={index} item={item}/>)}
             
 
             </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { AccountBalanceWallet, AccountBox, Add, Dashboard, Inventory, Logout, Receipt, ShoppingBag } from '@mui/icons-material'
-import DrawerList from '../../../customer/components/Navbar/DrawerList';
+import DrawerList from '../../../component/DrawerList';
 
 const menu=[
     {

@@ -1,27 +1,45 @@
 import { Add, AddShoppingCart, FavoriteBorder, LocalShipping, Remove, Shield, Star, Wallet, WorkspacePremium } from '@mui/icons-material'
 import { Button, Divider } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SimilarProduct from './SimilarProduct';
 import ReviewCard from '../Review/ReviewCard';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { useParams } from 'react-router-dom';
+import { fetchProductById } from '../../../State/customer/ProductSlice';
 
 const ProductDetails = () => {
   const [quality,setQuality]=React.useState(1);
+  const dispatch=useAppDispatch();
+  const {productId}=useParams()
+  const {product}=useAppSelector(store=>store);
+  const [activeImage,setActiveImage]=useState(0);
+
+
+  useEffect(()=>{
+    dispatch(fetchProductById(Number(productId)))
+  },[productId])
+
+  const handleActiveImage=(value)=>()=>{
+    setActiveImage(value)
+  }
+  
   return (
     <div className='px-5 lg:px-20 pt-10'>
       <div className="grid grid-cols-2 lg:grid-cols-2 gap-10">
         <section className="flex flex-col lg:flex-row gap-5">
           <div className="w-full lg:w-[15%] flex flex-wrap lg:flex-col gap-3">
-            {[1,1,1,1].map((item)=><img className='lg:w-full w-[50px] cursor-pointer rounded-md' src='https://imgs.search.brave.com/velq-nAuiZcfMrYWWV-OvQZLw9v0A8YnYTVL1e7mQ5I/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9kYXNz/ZXQubWFueWF2YXIu/Y29tL2ltYWdlLzA3/MTBmM2VlLTc1ZDQt/NGY1Yi1hNDNlLTNi/YzE5ZDk4NWU0Yi9U/U0IxMDMwXzQxMC00/MDUtQkxBQ0stQlJP/V04uMTUzM18yOS0w/My0yMDI1LTEyLTU0/P2Fpbz13LTM0NTto/LTQ4ODtzbWFydCxw/cm9taW5lbnQ7ZHBy/LTI7'/>)}
+            {product.product?.images.map((item,index)=><img onClick={handleActiveImage(index)}
+             className='lg:w-full w-[50px] cursor-pointer rounded-md' src={item}/>)}
 
           </div>
           <div className="w-full lg:w-[85%]">
-            <img className='w-full rounded-md' src='https://imgs.search.brave.com/APrOlEKmqVOPLyoN5WQvQw70h1Rz-vzXoo4EbJqY75w/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9kYXNz/ZXQubWFueWF2YXIu/Y29tL2ltYWdlLzgx/ZjFkODEyLTQ2MDMt/NDY1Yy05YTY1LTk5/MGI4MWJkMTgyYy9U/U0IxMDMwXzQxMC00/MDUtQkxBQ0stQlJP/V04uMTU1OV8yOS0w/My0yMDI1LTEyLTU3/P2Fpbz13LTM0NTto/LTQ4ODtzbWFydCxw/cm9taW5lbnQ7ZHBy/LTI7'
+            <img className='w-full rounded-md' src={product.product?.images[activeImage]}
              alt=''/>
           </div>
         </section>
         <section>
-          <h1 className="font-bold text-lg text-[#00927c]">Shayam Cloth</h1>
-          <p className="text-gray-500 font-semibold">men black shirt</p>
+          <h1 className="font-bold text-lg text-[#00927c]">{product.product?.seller?.businessDetails.businessName}</h1>
+          <p className="text-gray-500 font-semibold">{product.product?.title}</p>
           <div className="flex justify-between items-center py-2 border w-[180px] px-3 mt-5">
             <div className="flex gap-1 items-center">
               <span>4</span>
@@ -36,13 +54,13 @@ const ProductDetails = () => {
           <div>
             <div className="price flex items-center gap-3 mt-5 text-2xl">
             <span className="font-sans text-gray-800">
-              ₹ 400
+              ₹{product.product?.sellingPrice}
             </span>
             <span className="line-through text-gray-400  ">
-              ₹ 999
+              ₹{product.product?.mrpPrice}
             </span>
             <span className="text-[#00927c] font-semibold">
-              60% off
+              {product.product?.discountPercent}%
             </span>
           </div>
           <p className='text-sm'>Inclusive of all taxes. Free Shipping above ₹1500</p>
@@ -94,10 +112,7 @@ const ProductDetails = () => {
           </div>
 
           <div className='mt-5'>
-            <p>Drape yourself in luxury with the Sangeet Wear Art Silk Embroidered Lace Border Work Saree, perfect for your Sangeet ceremony. 
-              This saree from our Bridal Collection boasts intricate embroidery and a charming lace border,
-             adding a touch of elegance to your ensemble. Crafted from premium tone silk, it ensures a refined look.
-             The unstitched blouse piece made of pure georgette can be tailored to your preferences. Remember to dry clean only for maintaining its exquisite condition.</p>
+            <p>{product.product?.description}</p>
           </div>
 
           <div className='mt-12 space-y-5'>

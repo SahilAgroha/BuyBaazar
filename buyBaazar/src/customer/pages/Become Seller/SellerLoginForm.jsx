@@ -36,7 +36,7 @@ const SellerLoginForm = () => {
         error={formik.touched.email && Boolean(formik.errors.email)}
         helperText={formik.touched.email && formik.errors.email}/>
         
-        {true && <div>
+        {true && <div className='space-y-5'>
           <p className='font-medium text-sm opacity-60'>Enter OTP sent to your email</p>
           <TextField fullWidth name='otp' label="OTP"
             onChange={formik.handleChange} onBlur={formik.handleBlur} 

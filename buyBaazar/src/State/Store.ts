@@ -2,8 +2,23 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { thunk } from "redux-thunk";
 import { TypedUseSelectorHook } from "react-redux";
-const rootReducer=combineReducers({
+import sellerSlice from "./seller/sellerSlice";
+import sellerProductSlice from './seller/sellerProductSlice';
+import productSlice from './customer/ProductSlice'
+import authSlice from './AuthSlice'
+import cartSlice from './customer/cartSlice'
+import orderSlice from './customer/orderSlice'
+import wishlistSlice from './customer/wishlistSlice'
 
+
+const rootReducer=combineReducers({
+    seller:sellerSlice,
+    sellerProduct:sellerProductSlice,
+    product:productSlice,
+    auth:authSlice,
+    cart:cartSlice,
+    order:orderSlice,
+    wishlist:wishlistSlice,
 })
 
 const store=configureStore({

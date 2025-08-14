@@ -2,6 +2,8 @@ import { Box, Button, Grid, TextField } from '@mui/material'
 import { useFormik } from 'formik'
 import React from 'react'
 import * as Yup from 'yup'
+import {useAppDispatch} from '../../../State/Store'
+import { createOrder } from '../../../State/customer/orderSlice'
 
 const AddressFormSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -13,7 +15,8 @@ const AddressFormSchema = Yup.object().shape({
     locality: Yup.string().required('Locality is required'),
 });
 
-const AddressForm = () => {
+const AddressForm = ({paymentGatway}) => {
+    const dispatch=useAppDispatch()
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -27,6 +30,7 @@ const AddressForm = () => {
         validationSchema:AddressFormSchema,
         onSubmit: (values) => {
             console.log(values);
+            dispatch(createOrder({address:values,jwt:localStorage.getItem('jwt') || "",paymentGateway:paymentGatway}))
         }
     })
   return (

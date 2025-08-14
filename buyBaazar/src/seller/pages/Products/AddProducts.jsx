@@ -5,10 +5,13 @@ import React, { useState } from 'react'
 import { uploadToCloudinary } from '../../../Util/UploadToCloudinary';
 import {colors} from "../../../data/Filter/color"
 import { mainCategory } from '../../../data/category/mainCategory';
+import { useAppDispatch } from '../../../State/Store';
+import { createProduct } from '../../../State/seller/sellerProductSlice';
 
 const AddProducts = () => {
   const [uploadImage,setUploadingImage]=useState(false);
   const [snackbarOpen,setOpenSnackbar]=useState(false);
+  const dispatch=useAppDispatch();
 
   const formik=useFormik({
     initialValues:{
@@ -26,8 +29,10 @@ const AddProducts = () => {
     },
     onSubmit:(values)=>{
       console.log("submit");
+      dispatch(createProduct({request:values,jwt:localStorage.getItem('jwt')}))
     }
   })
+  
   const handleImageChange=async(event)=>{
     const file=event.target.file[0];
     setUploadingImage(true);

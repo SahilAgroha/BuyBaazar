@@ -1,20 +1,31 @@
 import { Box, Button, Divider } from '@mui/material'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import OrderStepper from './OrderStepper';
 import { Payments } from '@mui/icons-material';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { fetchOrderById, fetchOrderItemById } from '../../../State/customer/orderSlice';
 
 const OrderDetails = () => {
     const navigate=useNavigate();
+    const dispatch=useAppDispatch();
+    const {orderId,orderItemId}=useParams();
+    const {order}=useAppSelector(store=>store)
+
+    useEffect(()=>{
+        dispatch(fetchOrderById({orderId,jwt:localStorage.getItem('jwt') || ''}))
+        dispatch(fetchOrderItemById({orderItemId,jwt:localStorage.getItem('jwt') || ''}))
+    })
+
   return (
     <Box className='space-y-5'>
         <section className="flex flex-col gap-5 justify-center items-center">
             <img alt="" className="w-[100px]" 
-            src='https://imgs.search.brave.com/GvzXRil-O2pXggOQabY51u6g-jv2T1UUahesS8Tyw8c/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA0LzQxLzcxLzUw/LzM2MF9GXzQ0MTcx/NTAyMF9pcXFrWlNR/anZKcVlGWG9HWnhP/Sk4zbzNaRmE0U3Jh/Zy5qcGc'/>
+            src={order.orderItem?.product.images[0]} />
             <div className="text-sm space-y-1 text-center">
-                <h1 className="font-bold">{"Sheoran Clothing"}</h1>
-                <p>{"Beautiful gold men's watch with a black strap on a wooden stand "}</p>
-                <p><strong>size : </strong>FREE</p>
+                <h1 className="font-bold">{order.orderItem?.product.seller?.businessDetails.businessName}</h1>
+                <p>{order.orderItem?.product.title}</p>
+                <p><strong>size : </strong>M</p>
             </div>
             <div>
                 <Button onClick={()=>navigate(`/reviews/${5}/create`)}>Write Review</Button>
@@ -28,11 +39,16 @@ const OrderDetails = () => {
             <h1 className="font-bold pb-3 "> Delivery Address</h1>
             <div className="text-sm space-y-2 ">
                 <div className="flex gap-5 font-medium">
-                    <p>Sahil</p>
+                    <p>{order.currentOrder?.shippingAddress.name}</p>
                     <Divider flexItem orientation='vertical'/>
-                    <p>{9812591172}</p>
+                    <p>{order.currentOrder?.shippingAddress.mobile}</p>
                 </div>
-                <p>Agroha,Hissar,Haryana-125047</p>
+                <p>
+                    {order.currentOrder?.shippingAddress.address},{" "}
+                    {order.currentOrder?.shippingAddress.state},{" "}
+                    {order.currentOrder?.shippingAddress.city},{" - "}
+                    {order.currentOrder?.shippingAddress.pinCode},
+                </p>
             </div>
         </div>
 
@@ -41,7 +57,7 @@ const OrderDetails = () => {
                 <div className="space-y-1">
                     <p>You saved <span className='text-green-500 font-medium text-xs'>&#8377;{699}.00</span> on this item</p>
                 </div>
-                <p className='font-medium'>&#8377;{799}.00</p>
+                <p className='font-medium'>&#8377;{order.orderItem?.sellingPrice}.00</p>
             </div>
             <div className="px-5">
                 <div className="bg-teal-50 px-5 py-2 text-xs font-medium flex items-center gap-3">
@@ -52,7 +68,7 @@ const OrderDetails = () => {
 
             <Divider/>
             <div className="px-5 pb-5">
-                <p className="text-xs"><strong>Sold by : </strong>Sheoran Clothing</p>
+                <p className="text-xs"><strong>Sold by : </strong>{order.orderItem?.product.seller?.businessDetails.businessName}</p>
             </div>
             <div className="p-10">
                 <Button disabled={true} color='error' sx={{py:"0.7rem"}} variant='outlined' fullWidth>
