@@ -42,7 +42,7 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function HomeCategoryTableTable() {
+export default function HomeCategoryTableTable({data}) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -56,14 +56,16 @@ export default function HomeCategoryTableTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {data.map((category,index) => (
+            <StyledTableRow key={category.id}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {index+1}
               </StyledTableCell>
-              <StyledTableCell >{row.calories}</StyledTableCell>
-              <StyledTableCell>{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+              <StyledTableCell >{category.id}</StyledTableCell>
+              <StyledTableCell>
+                <img className='w-20 rounded-md' src={category.image}/>
+              </StyledTableCell>
+              <StyledTableCell align="right">{category.categoryId}</StyledTableCell>
               <StyledTableCell align="right">
                 <Button>
                     <Edit/>

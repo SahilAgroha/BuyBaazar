@@ -1,10 +1,12 @@
 import React from 'react'
-import ShopByCAtegoryCard from './ShopByCAtegoryCard'
+import ShopByCategoryCard from './ShopByCategoryCard'
+import { useAppSelector } from '../../../../State/Store'
 
 const ShopByCategory = () => {
+  const {customer}=useAppSelector(store=>store)
   return (
     <div className='flex flex-wrap justify-between gap-7 lg:px-20'>
-      {[1, 2, 3, 4, 5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1].map((items) => <ShopByCAtegoryCard/>)}
+      {customer.homePageData?.shopByCategories.map((item) => <ShopByCategoryCard item={item}/>)}
     </div>
   )
 }

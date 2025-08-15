@@ -9,7 +9,11 @@ import authSlice from './AuthSlice'
 import cartSlice from './customer/cartSlice'
 import orderSlice from './customer/orderSlice'
 import wishlistSlice from './customer/wishlistSlice'
-
+import sellerOrderSlice from './seller/sellerOrderSlice'
+import transactionSlice from './seller/transactionSlice'
+import adminSlice from "./admin/adminSlice"
+import customerSlice from './customer/customerSlice'
+import dealSlice from './admin/DealSlice'
 
 const rootReducer=combineReducers({
     seller:sellerSlice,
@@ -19,6 +23,13 @@ const rootReducer=combineReducers({
     cart:cartSlice,
     order:orderSlice,
     wishlist:wishlistSlice,
+    customer:customerSlice,
+
+    sellerOrder:sellerOrderSlice,
+    transactions:transactionSlice,
+
+    admin:adminSlice,
+    deal:dealSlice,
 })
 
 const store=configureStore({

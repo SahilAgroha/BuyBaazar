@@ -9,6 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, IconButton } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { getAllDeals } from '../../../State/admin/DealSlice';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,6 +45,13 @@ const rows = [
 ];
 
 export default function DealTable() {
+  const dispatch=useAppDispatch();
+  const {deal}=useAppSelector(store=>store);
+
+  React.useEffect(()=>{
+    dispatch(getAllDeals())
+  },[])
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -57,14 +66,16 @@ export default function DealTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {deal.deals.map((item,index) => (
+            <StyledTableRow key={item.id}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {index+1}
               </StyledTableCell>
-              <StyledTableCell >{row.calories}</StyledTableCell>
-              <StyledTableCell>{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+              <StyledTableCell >
+                <img className='w-20 rounded-md' src={item.category.image} alt=''/>
+              </StyledTableCell>
+              <StyledTableCell>{item.category.categoryId}</StyledTableCell>
+              <StyledTableCell align="right">{item.discount}</StyledTableCell>
               <StyledTableCell align="right">
                 <Button>
                     <Edit/>

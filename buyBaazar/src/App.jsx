@@ -25,6 +25,8 @@ import Auth from './customer/pages/Auth/Auth'
 import { fetchUserProfile } from './State/AuthSlice'
 import PaymentSuccess from './customer/pages/PaymentSuccess'
 import Wishlist from './customer/pages/Wishlist/Wishlist'
+import {createHomeCategories} from './State/customer/customerSlice'
+import { homeCategories } from './data/HomeCategories'
 
 
 
@@ -37,6 +39,7 @@ function App() {
 
   useEffect(()=>{
     dispatch(fetchSellerProfile(localStorage.getItem("jwt") || ""))
+    dispatch(createHomeCategories(homeCategories))
   },[])
 
   useEffect(()=>{
