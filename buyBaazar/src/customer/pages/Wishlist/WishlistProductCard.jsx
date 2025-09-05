@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../../State/Store'
 import { addProductToWishlist } from '../../../State/customer/wishlistSlice';
 import { teal } from '@mui/material/colors';
 
-const WishlistProductCard = (item) => {
+const WishlistProductCard = ({item}) => {
   const dispatch=useAppDispatch();
 
 

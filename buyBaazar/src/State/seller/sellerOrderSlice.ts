@@ -7,7 +7,7 @@ import {api} from '../../config/Api'
 export const fetchSellerOrders=createAsyncThunk<Order[],string>('sellerOrders/fetchSellerOrders',
     async (jwt,{rejectWithValue})=>{
         try {
-            const response=await api.get('/api/seller/orders',{
+            const response=await api.get('/api/seller/orders',{  // impl
                 headers:{
                     Authorization:`Bearer ${jwt}`,
                 },
@@ -23,7 +23,7 @@ export const fetchSellerOrders=createAsyncThunk<Order[],string>('sellerOrders/fe
 export const updateOrderStatus=createAsyncThunk<Order,{jwt:string,orderId:number,orderStatus:OrderStatus}>('sellerOrders/updateOrderStatus',
     async ({jwt,orderId,orderStatus},{rejectWithValue})=>{
         try {
-            const response=await api.patch(`/api/seller/orders/${orderId}/status/${orderStatus}`,null,{
+            const response=await api.patch(`/api/seller/orders/${orderId}/status/${orderStatus}`,null,{   // impl
                 headers:{
                     Authorization:`Bearer ${jwt}`,
                 },
@@ -38,7 +38,7 @@ export const updateOrderStatus=createAsyncThunk<Order,{jwt:string,orderId:number
 export const deleteOrder=createAsyncThunk<any,{jwt:string,orderId:number}>('sellerOrders/deleteOrder',
     async ({jwt,orderId},{rejectWithValue})=>{
         try {
-            const response=await api.delete(`/api/seller/orders/${orderId}/delete`,{
+            const response=await api.delete(`/api/seller/orders/${orderId}/delete`,{   // Can't find 
                 headers:{
                     Authorization:`Bearer ${jwt}`,
                 },

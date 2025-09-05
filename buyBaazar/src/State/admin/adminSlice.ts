@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HomeCategory } from '../../types/HomeCategory';
 import { api } from '../../config/Api';
 
+// All Done
+
 const API_URL='/admin'
 
 export const updateHomeCategory=createAsyncThunk<HomeCategory,{id:number,data:HomeCategory}>('homeCategory/updateHomeCategory',
@@ -40,7 +42,7 @@ const initialState:HomeCategoryState={
     error: null,
     categoryUpdate: false
 }
-const homeCategorySlice=createSlice({
+const adminSlice=createSlice({
     name:"homeCategory",
     initialState,
     reducers:{},
@@ -80,4 +82,4 @@ const homeCategorySlice=createSlice({
     }
 })
 
-export default homeCategorySlice.reducer
+export default adminSlice.reducer

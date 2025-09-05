@@ -25,8 +25,9 @@ import Auth from './customer/pages/Auth/Auth'
 import { fetchUserProfile } from './State/AuthSlice'
 import PaymentSuccess from './customer/pages/PaymentSuccess'
 import Wishlist from './customer/pages/Wishlist/Wishlist'
-import {createHomeCategories} from './State/customer/customerSlice'
+import {createHomeCategories, fetchHomePageData} from './State/customer/customerSlice'
 import { homeCategories } from './data/HomeCategories'
+import VerifySellerOtp from './customer/pages/Become Seller/VerifySellerOtp'
 
 
 
@@ -40,13 +41,14 @@ function App() {
   useEffect(()=>{
     dispatch(fetchSellerProfile(localStorage.getItem("jwt") || ""))
     dispatch(createHomeCategories(homeCategories))
+    dispatch(fetchHomePageData);
   },[])
 
-  useEffect(()=>{
-    if(seller.profile){
-      navigate("/seller")
-    }
-  },[seller.profile])
+  // useEffect(()=>{
+  //   if(seller.profile){
+  //     navigate("/seller")
+  //   }
+  // },[seller.profile])
 
   useEffect(()=>{
     dispatch(fetchUserProfile({jwt: auth.jwt || localStorage.getItem('jwt')}))
@@ -60,17 +62,18 @@ function App() {
           <Navbar/>
           <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path='/login' element={<Auth/>}/>
+            <Route path='/login' element={<Auth/>}/> 
             <Route path='/products/:category' element={<Product/>}/>
             <Route path='/reviews/:productId' element={<Review/>}/>
-            <Route path='/product-details/:categoryId/:name/:productId' element={<ProductDetails/>}/>
+            <Route path='/product-details/:categoryId/:productId' element={<ProductDetails/>}/>
             <Route path='/cart' element={<Cart/>}/>
-            <Route path='/wishlist' element={<Wishlist/>}/>
+            <Route path='/wishlist' element={<Wishlist/>}/> 
             <Route path='/checkout' element={<Checkout/>}/>
-            <Route path='/payment-success' element={<PaymentSuccess/>}/>
+            <Route path='/payment-success/:orderId' element={<PaymentSuccess/>}/> 
             <Route path='/become-seller' element={<BecomeSeller/>}/>
-            <Route path='/account/*' element={<Account/>}/>
-            <Route path='/seller/*' element={<SellerDashboard/>}/>
+            <Route path="/verify-seller/:otp" element={<VerifySellerOtp />} />
+            <Route path='/seller/*' element={<SellerDashboard/>}/> 
+            <Route path='/account/*' element={<Account/>}/> 
             <Route path='/admin/*' element={<AdminDashboard/>}/>
           </Routes>
         </div>

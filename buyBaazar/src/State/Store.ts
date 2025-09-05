@@ -14,6 +14,9 @@ import transactionSlice from './seller/transactionSlice'
 import adminSlice from "./admin/adminSlice"
 import customerSlice from './customer/customerSlice'
 import dealSlice from './admin/DealSlice'
+import sellerAuthSlice from "./seller/sellerAuthSlice";
+import couponSlice from './admin/AdminCouponSlice';
+import reviewsSlice from "./customer/reviewSlice";
 
 const rootReducer=combineReducers({
     seller:sellerSlice,
@@ -27,9 +30,13 @@ const rootReducer=combineReducers({
 
     sellerOrder:sellerOrderSlice,
     transactions:transactionSlice,
+    reviews: reviewsSlice,
 
     admin:adminSlice,
     deal:dealSlice,
+    coupon: couponSlice, 
+
+    sellerAuth:sellerAuthSlice,
 })
 
 const store=configureStore({

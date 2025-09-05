@@ -31,26 +31,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+// DealTable.jsx
+export default function DealTable({ onEdit }) {
+  const dispatch = useAppDispatch();
+  const { deal } = useAppSelector(store => store);
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-export default function DealTable() {
-  const dispatch=useAppDispatch();
-  const {deal}=useAppSelector(store=>store);
-
-  React.useEffect(()=>{
+  React.useEffect(() => {
     dispatch(getAllDeals())
-  },[])
+  }, [dispatch]);
 
   return (
     <TableContainer component={Paper}>
@@ -58,33 +46,31 @@ export default function DealTable() {
         <TableHead>
           <TableRow>
             <StyledTableCell>No</StyledTableCell>
-            <StyledTableCell >Image</StyledTableCell>
+            <StyledTableCell>Image</StyledTableCell>
             <StyledTableCell>Category</StyledTableCell>
-            <StyledTableCell align='right'>Discount</StyledTableCell>
+            <StyledTableCell align="right">Discount</StyledTableCell>
             <StyledTableCell align="right">Update</StyledTableCell>
             <StyledTableCell align="right">Delete</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {deal.deals.map((item,index) => (
+          {deal.deals.map((item, index) => (
             <StyledTableRow key={item.id}>
-              <StyledTableCell component="th" scope="row">
-                {index+1}
-              </StyledTableCell>
-              <StyledTableCell >
-                <img className='w-20 rounded-md' src={item.category.image} alt=''/>
+              <StyledTableCell>{index + 1}</StyledTableCell>
+              <StyledTableCell>
+                <img className="w-20 rounded-md" src={item.category.image} alt="" />
               </StyledTableCell>
               <StyledTableCell>{item.category.categoryId}</StyledTableCell>
               <StyledTableCell align="right">{item.discount}</StyledTableCell>
               <StyledTableCell align="right">
-                <Button>
-                    <Edit/>
+                <Button onClick={() => onEdit(item)}>
+                  <Edit />
                 </Button>
               </StyledTableCell>
               <StyledTableCell align="right">
                 <IconButton>
-                    <Delete sx={{color:'red'}}/>
-                </IconButton >
+                  <Delete sx={{ color: "red" }} />
+                </IconButton>
               </StyledTableCell>
             </StyledTableRow>
           ))}

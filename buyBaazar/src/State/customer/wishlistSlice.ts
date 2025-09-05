@@ -3,6 +3,8 @@ import { Wishlist, WishlistState } from "../../types/wishlistTypes";
 import { api } from "../../config/Api";
 import { number } from "yup";
 
+// All Done  // impl
+
 const initialState:WishlistState={
     wishlist: null,
     loading:false,
@@ -11,7 +13,7 @@ const initialState:WishlistState={
 export const getWishlistByUserId=createAsyncThunk('wishlist/getWishlistByUserId',
     async(_,{rejectWithValue})=>{
         try {
-            const response=await api.get(`/api/wishlist`,{
+            const response=await api.get(`/api/wishlist`,{    //impl
                 headers:{
                     Authorization:`Bearer ${localStorage.getItem('jwt')}`
                 },
@@ -25,7 +27,7 @@ export const getWishlistByUserId=createAsyncThunk('wishlist/getWishlistByUserId'
 export const addProductToWishlist=createAsyncThunk('wishlist/addProductToWishlist',
     async({productId}:{productId:number},{rejectWithValue})=>{
         try {
-            const response = await api.post(`/api/wishlist/add-product/${productId}`,{ },{
+            const response = await api.post(`/api/wishlist/add-product/${productId}`,{ },{   // impl
                 headers:{
                     Authorization:`Bearer ${localStorage.getItem('jwt')}`,
                 }

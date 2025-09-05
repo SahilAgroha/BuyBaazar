@@ -5,6 +5,8 @@ import { useAppSelector } from '../../../State/Store'
 
 const UserDetails = () => {
   const {auth}=useAppSelector(store=>store)
+  console.log('auth -- ',auth);
+  
   return (
     <div className='flex justify-center py-10'>
         <div className="w-full lg:w-[70%]">
@@ -16,7 +18,7 @@ const UserDetails = () => {
                 <Divider/>
                 <ProfileFieldCard keys={"Email"} value={auth.user?.email || ''}/>
                 <Divider/>
-                <ProfileFieldCard keys={"Mobile"} value={auth.user?.mobile || 9812591172}/>
+                <ProfileFieldCard keys={"Mobile"} value={auth.user?.mobile || ''}/>
             </div>
         </div>
       

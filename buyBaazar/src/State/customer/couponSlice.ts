@@ -3,9 +3,11 @@ import { Cart } from "../../types/cartType"
 import { api } from "../../config/Api";
 import { CouponState } from "../../types/couponTypes";
 
+// All Done
+
 const API_URL="/api/coupons"
 
-export const applyCoupon=createAsyncThunk<Cart,{apply:string;code:string;orderValue:number;jwt:string},{rejectValue}>(
+export const applyCoupon=createAsyncThunk<Cart,{apply:string;code:string;orderValue:number;jwt:string},{rejectValue:any}>(
     "coupon/applyCoupon",
     async({apply,code,orderValue,jwt},{rejectWithValue})=>{
         try {
@@ -15,6 +17,7 @@ export const applyCoupon=createAsyncThunk<Cart,{apply:string;code:string;orderVa
                     Authorization:`Bearer ${jwt}`,
                 },
             });
+            console.log("applyCoupon params  ",{apply,code,orderValue});
             console.log("apply coupon  ",response.data);
             return response.data;
         } catch (error) {

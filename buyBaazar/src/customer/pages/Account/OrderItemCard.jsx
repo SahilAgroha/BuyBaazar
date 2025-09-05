@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 const OrderItemCard = ({item,order}) => {
   const navigate=useNavigate();
 
-
   return (
     <div onClick={()=>navigate(`/account/order/${order.id}/${item.id}`)} className='text-sm bg-white p-5 space-y-4 border rounded-md cursor-pointer'>
       <div className='flex items-center gap-5'>
@@ -17,7 +16,7 @@ const OrderItemCard = ({item,order}) => {
           </Avatar>
         </div>
         <div>
-          <h1 className="font-bold text-[#00927c]">PENDING</h1>
+          <h1 className="font-bold text-[#00927c]">{order?.orderStatus}</h1>
           <p>Arriving By {order.deliverDate}</p>
         </div>
 

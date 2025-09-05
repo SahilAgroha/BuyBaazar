@@ -1,5 +1,21 @@
 import React from 'react'
-import { AccountBox, Add, Category, Dashboard, ElectricBolt, Home, IntegrationInstructions, LocalOffer, Logout } from '@mui/icons-material';
+import { 
+  AccountBox, 
+  Add, 
+  Category, 
+  Dashboard, 
+  ElectricBolt, 
+  Home, 
+  IntegrationInstructions, 
+  LocalOffer, 
+  Logout,
+  People, // for Sellers
+  Assessment, // for Reports
+  Money,
+  MoneyOff,
+  MoneyRounded,
+  MoneyOffCsred
+} from '@mui/icons-material';
 import DrawerList from './../../component/DrawerList'
 
 const menu = [
@@ -45,11 +61,25 @@ const menu = [
     icon: <LocalOffer className='text-[#00927c]'/>,
     activeIcon: <LocalOffer className='text-white'/>,
   },
+  // ✅ NEW: Seller Management
+  {
+    name:"Sellers",
+    path:"/admin/sellers",
+    icon: <People className='text-[#00927c]'/>,
+    activeIcon: <People className='text-white'/>,
+  },
+  {
+    name:"Transaction",
+    path:"/admin/transaction",
+    icon: <MoneyOff className='text-[#00927c]'/>,
+    activeIcon: <MoneyOff className='text-white'/>,
+  },
 ];
+
 const menu2=[
   {
     name:"Account",
-    path:"/seller/account",
+    path:"/admin/account",
     icon:<AccountBox className='text-[#00927c]'/>,
     activeIcon:<AccountBox className='text-white'/>,
   },
@@ -60,9 +90,6 @@ const menu2=[
     activeIcon:<Logout className='text-white'/>,
   },
 ];
-
-
-
 
 const AdminDrawerList = ({toggleDrawer}) => {
   return (

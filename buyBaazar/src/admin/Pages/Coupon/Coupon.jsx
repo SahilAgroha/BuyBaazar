@@ -1,111 +1,102 @@
 import { Delete } from '@mui/icons-material';
-import { Button, FormControl, InputLabel, MenuItem, Paper, Select, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Paper, Select, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, CircularProgress, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { deleteCoupon, getAllCoupons } from '../../../State/admin/AdminCouponSlice';
 
-import React, { useState } from 'react'
-
-const accountStatu = [
-  {
-    status: "PENDING_VERFICATION",
-    title: "Pending Verification",
-    description: "Your account is awaiting verification. Please check your email for further instructions."
-  },
-  {
-    status: "ACTIVE",
-    title: "Active",
-    description: "Your account is active and in good standing."
-  },
-  {
-    status: "SUSPENDED",
-    title: "Suspended",
-    description: "Your account has been temporarily suspended due to suspicious activity or violation of terms."
-  },
-  {
-    status: "DEACTIVATED",
-    title: "Deactivated",
-    description: "Your account has been deactivated. Contact support to reactivate."
-  },
-  {
-    status: "BANNED",
-    title: "Banned",
-    description: "Your account has been permanently banned due to severe violations."
-  },
-  {
-    status: "CLOSED",
-    title: "Closed",
-    description: "Your account has been closed and is no longer accessible."
-  }
-]
-
-const StyledTableCell=styled(TableCell)(({theme})=>({
-    [`&.${tableCellClasses.head}`]:{
-        backgroundColor:theme.palette.common.black,
-        color:theme.palette.common.white,
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
     },
-    [`&.${tableCellClasses.body}`]:{
-        fontSize:14,
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
     }
 }));
-const StyledTableRow=styled(TableRow)(({theme})=>({
-    '&:nth-of-type(odd)':{ backgroundColor:theme.palette.action.hover,},
-    '&:last-child td, &:last-child th':{border:0,},
-}))
 
-function createData(name,calories,fat,carbs,protein){
-    return {name,calories,fat,carbs,protein}
-}
-
-const rows=[
-    createData('Frozen youghurt',159,6.0,24,4.0),
-    createData('Ice cream sandwich',237,9.0,37,4.3),
-    createData('Eclair',262,16.0,24,6.0),
-    createData('Cupcake',305,3.7,67,4.3),
-    createData('Gingerbread',356,16.0,49,3.9),
-];
-
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': { backgroundColor: theme.palette.action.hover, },
+    '&:last-child td, &:last-child th': { border: 0, },
+}));
 
 const Coupon = () => {
-    const [accountStatus,setAccountStatus]=useState("ACTIVE")
-    
-    const handleChange=(event)=>{
-        setAccountStatus(event.target.value)
+    const dispatch = useAppDispatch();
+    const { coupon } = useAppSelector(store => store);
+    const jwt = localStorage.getItem('jwt');
+
+    useEffect(() => {
+        if (jwt) {
+            dispatch(getAllCoupons({ jwt }));
+        }
+    }, [dispatch, jwt]);
+
+    const handleDelete = (id) => {
+        if (window.confirm('Are you sure you want to delete this coupon?')) {
+            dispatch(deleteCoupon({ id, jwt }));
+        }
+    };
+
+    if (coupon.loading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <CircularProgress />
+            </div>
+        );
     }
-  return (
-    <>
-    
-    <TableContainer component={Paper}>
-        <Table sx={{minWidth:700}} aria-label='customized-table'>
-            <TableHead>
-                <TableRow>
-                    <StyledTableCell>Coupon Code</StyledTableCell>
-                    <StyledTableCell>Start Date</StyledTableCell>
-                    <StyledTableCell >End Date</StyledTableCell>
-                    <StyledTableCell align='right'>Minimum Order Value</StyledTableCell>
-                    <StyledTableCell align='right'>Discount</StyledTableCell>
-                    <StyledTableCell align='right'>Status</StyledTableCell>
-                    <StyledTableCell align='right'>Delete</StyledTableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {
-                    rows.map((row)=>(
-                        <StyledTableRow key={row.name}>
-                            <StyledTableCell component='th' scope='row'>{row.name}</StyledTableCell>
-                            <StyledTableCell>{row.calories}</StyledTableCell>
-                            <StyledTableCell>{row.fat}</StyledTableCell>
-                            <StyledTableCell align='right'>{row.carbs}</StyledTableCell>
-                            <StyledTableCell align='right'>{row.protein}</StyledTableCell>
-                            <StyledTableCell align='right'>{row.protein}</StyledTableCell>
-                            <StyledTableCell align='right'>
-                                <Delete className='text-[#00927c]'/>
-                            </StyledTableCell>
-                        </StyledTableRow>
-                    ))
-                }
-            </TableBody>
-        </Table>
-    </TableContainer>
-    </>
-  )
+
+    if (coupon.error) {
+        return (
+            <div className="flex justify-center items-center h-screen text-red-500">
+                <Typography variant="h6">Error loading coupons: {coupon.error}</Typography>
+            </div>
+        );
+    }
+
+    return (
+        <div className="p-5">
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label='customized-table'>
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>Coupon Code</StyledTableCell>
+                            <StyledTableCell>Start Date</StyledTableCell>
+                            <StyledTableCell>End Date</StyledTableCell>
+                            <StyledTableCell align='right'>Minimum Order Value</StyledTableCell>
+                            <StyledTableCell align='right'>Discount</StyledTableCell>
+                            <StyledTableCell align='right'>Status</StyledTableCell>
+                            <StyledTableCell align='right'>Delete</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {console.log('coupon - - ',coupon)}
+                        {coupon.coupons.length > 0 ? (
+                            coupon.coupons.map((item) => (
+                                <StyledTableRow key={item.id}>
+                                    <StyledTableCell component='th' scope='row'>{item.code}</StyledTableCell>
+                                    <StyledTableCell>{item.validityStartDate}</StyledTableCell>
+                                    <StyledTableCell>{item.validityEndDate}</StyledTableCell>
+                                    <StyledTableCell align='right'>&#8377;{item.minimumOrderValue}</StyledTableCell>
+                                    <StyledTableCell align='right'>{item.discountPercentage}%</StyledTableCell>
+                                    <StyledTableCell align='right'>{item.active ? "Active" : "Inactive"}</StyledTableCell>
+                                    <StyledTableCell align='right'>
+                                        <Button onClick={() => handleDelete(item.id)}>
+                                            <Delete className='text-[#00927c]' />
+                                        </Button>
+                                    </StyledTableCell>
+                                </StyledTableRow>
+                            ))
+                        ) : (
+                            <StyledTableRow>
+                                <StyledTableCell colSpan={7} align="center">
+                                    No coupons found.
+                                </StyledTableCell>
+                            </StyledTableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>
+    );
 }
 
-export default Coupon
+export default Coupon;

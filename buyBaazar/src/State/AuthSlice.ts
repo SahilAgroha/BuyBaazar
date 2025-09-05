@@ -3,47 +3,53 @@ import { api } from "../config/Api";
 import { User } from "../types/userTypes";
 
 
+// All Done  // impl
+
+// Impl 
 export const sendLoginSignupOtp=createAsyncThunk("/auth/sendLoginSignupOtp",
     async({email}:{email:string},{rejectWithValue})=>{
         try {
             const response =await api.post("/auth/sent/login-signup-otp",{email}) 
-            console.log("login otp  - - ",response);
+            // console.log("login otp  - - ",response);
             
         } catch (error) {
-            console.log("error - - - ",error);
+            // console.log("error - - - ",error);
             
         }
     }
 )
 
+// impl
 export const signin=createAsyncThunk<any,any>("/auth/signin",
     async(loginRequest,{rejectWithValue})=>{
         try {
             const response =await api.post("auth/signing",loginRequest) 
-            console.log("Signing  - - ",response);
+            // console.log("Signing  - - ",response);
             localStorage.setItem('jwt',response.data.jwt)
             return response.data
         } catch (error) {
-            console.log("error - - - ",error);
+            // console.log("error - - - ",error);
             
         }
     }
 )
 
+// impl
 export const signup=createAsyncThunk<any,any>("/auth/signup",
     async(signupRequest,{rejectWithValue})=>{
         try {
             const response =await api.post("/auth/signup",signupRequest) 
-            console.log("Signup  - - ",response);
+            // console.log("Signup  - - ",response);
             localStorage.setItem('jwt',response.data.jwt)
             return response.data
         } catch (error) {
-            console.log("error - - - ",error);
+            // console.log("error - - - ",error);
             
         }
     }
 )
 
+// impl
 export const fetchUserProfile=createAsyncThunk<any,any>("/auth/fetchUserProfile",
     async({jwt},{rejectWithValue})=>{
         try {
@@ -55,20 +61,21 @@ export const fetchUserProfile=createAsyncThunk<any,any>("/auth/fetchUserProfile"
             console.log("User profile  - - ",response.data);
             return response.data
         } catch (error) {
-            console.log("error - - - ",error);
+            // console.log("error - - - ",error);
             
         }
     }
 )
 
+//impl
 export const logout=createAsyncThunk<any,any>('/auth/logout',
     async(navigate,{rejectWithValue})=>{
         try {
             localStorage.clear();
-            console.log('Logout success');
+            // console.log('Logout success');
             navigate('/');
         } catch (error) {
-            console.log("error - - ",error);
+            // console.log("error - - ",error);
         }
     }
 )

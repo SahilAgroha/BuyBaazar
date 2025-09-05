@@ -1,6 +1,5 @@
-export interface Deal{
-    
-}
+import { Deal } from "./dealType";
+
 
 export interface HomeData{
     id:number;
@@ -19,3 +18,9 @@ export interface HomeCategory{
     image:string;
     parentCategoryId:string;
 }
+
+export type HomeCategorySection =
+  | "GRID"
+  | "SHOP_BY_CATEGORIES"
+  | "ELECTRIC_CATEGORIES"
+  | "DEALS";

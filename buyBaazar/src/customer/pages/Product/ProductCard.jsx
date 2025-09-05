@@ -35,7 +35,8 @@ const ProductCard = ({item}) => {
 
   return (
     <>
-      <div onClick={()=>navigate(`/products-details/${item.category?.categoryId}/${item.title}/${item.id}`)} className="group px-4 relative">
+      <div onClick={()=>navigate(`/product-details/${item.category?.categoryId}/${item.id}`)} className="group px-4 relative">
+
         <div className="card"
         onMouseEnter={()=>setIsHovered(true)}
         onMouseLeave={()=>setIsHovered(false)}>
@@ -72,7 +73,7 @@ const ProductCard = ({item}) => {
               ₹{item.mrpPrice}
             </span>
             <span className="text-[#00927c] font-semibold">
-              {item.discountPercent}%
+              {item.discountPercentage}%
             </span>
           </div>
 

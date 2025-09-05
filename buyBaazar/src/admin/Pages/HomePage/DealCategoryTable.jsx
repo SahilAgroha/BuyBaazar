@@ -5,6 +5,8 @@ import { useAppSelector } from '../../../State/Store'
 
 const DealCategoryTable = () => {
   const {customer}=useAppSelector(store=>store);
+
+  console.log("deal categories ",customer);
     
   return (
     <div>

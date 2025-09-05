@@ -30,7 +30,7 @@ const initialState:TransactionState={
 export const fetchTransactionBySeller=createAsyncThunk<Transaction[],string,{rejectValue:string}>('transactions/fetchTransactionBySeller',
     async(jwt,{rejectWithValue})=>{
         try {
-            const response=await api.get('/api/transactions/seller',{
+            const response=await api.get('/api/transactions/seller',{   // impl
                 headers:{
                     Authorization:`Bearer ${jwt}`,
                 },
@@ -46,7 +46,11 @@ export const fetchTransactionBySeller=createAsyncThunk<Transaction[],string,{rej
 export const fetchAllTransaction=createAsyncThunk<Transaction[],void,{rejectValue:string}>('transactions/fetchAllTransaction',
     async(_,{rejectWithValue})=>{
         try {
-            const response=await api.get('/api/transactions');
+            const response=await api.get('/api/transactions',{
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem('jwt')}`,
+                }
+            });
             console.log("fetchAllTransaction ",response.data);
             return response.data;
         } catch (error) {
