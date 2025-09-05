@@ -44,7 +44,7 @@ Follow these steps to get a development copy of the project running on your loca
 
 2.  **Set up the Backend:**
     ```bash
-    cd buybaazar/backend
+    cd Buy-Baazar
     # Configure your database and API keys in src/main/resources/application.properties
     # Build and run the Spring Boot app
     ./mvnw spring-boot:run
@@ -52,7 +52,7 @@ Follow these steps to get a development copy of the project running on your loca
 
 3.  **Set up the Frontend:**
     ```bash
-    cd buybaazar/frontend
+    cd buyBaazar
     npm install
     npm start
     ```
